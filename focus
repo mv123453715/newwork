@@ -1,0 +1,299 @@
+See discussions, stats, and author profiles for this publication at: https://www.researchgate.net/publication/3887632
+Diatom autofocusing in brighteld microscopy: a comparative study
+J. L. Pech-Pacheco & G. Cristobal
+Imaging & Vision Dept.
+Instituto de Optica (CSIC)
+Serrano 121, 28006 Madrid. Spain
+fpech,gabrielg@optica.csic.es
+J. Chamorro-Martnez & J. Fernandez-Valdivia
+Depto. Ciencias de la Computacion e I.A.
+ETS de Ingeniera Informatica
+Avda. Andaluca, 38, 18071 Granada. Spain
+fjesus,J.Fdez-Valdiviag@decsai.ugr.es
+Abstract
+We present a number autofocusing methods in light-
+ning microscopy for its use in diatom identication.
+Among these, the Tenengrad method has been consid-
+ered one of the best. The basic requirements for a prac-
+tical autofocusing system are speed, sharpness and ro-
+bustness to noise.Recently other focus measures based
+on a modied Laplacian method are said to perform bet-
+ter than Tenengrad. We investigate two sound methods
+based on a modied Tenengrad and a modied Lapla-
+cian. Measurements show that provide a reliable and
+suitable focus measure than other similar methods. We
+investigate the window size analysis dependency and
+perform an univariate analysis on the focus measures.
+The focusing techniques are implemented in an auto-
+matic slide scanning system for diatom detection and
+identication for its use in the ADIAC project. 1
+1. Introduction
+Diatoms are unicelular algae related with brown al-
+gae that grow anywhere where there exists enough light
+and moisture. They are ecologically very important
+because they contribute around the 20% of the world's
+carbon xation [3]. Besides the ecological interest,
+there exists a number of other elds where diatom
+analysis is useful: geological, climatological, geograph-
+ical,archeological or forensic research. Many applica-
+tions diatom analysis require both the presence of ex-
+perts and the identication of a large range of diatom
+species and therefore are tedious and time consuming.
+However, most of the existent computer-based diatom
+analysis methods do not tackle the whole automatiza-
+tion process [2, 7]. One key aspect in the automati-
+1This work has been supported in part by the follow-
+ing Grants: EU ADIAC MAS3-CT97-0122 and EU INCO-DC
+AMOVIP 961646 Project
+zation process is to determine reliable and fast autofo-
+cusing methods. Groen et al [4] has identied eight
+dierent criteria for comparing autofocus algorithms
+[4]. Many focusing techniques have been proposed in
+the literature [5, 9, 10, 6, 1]. Most of them extract a
+focus measure that gives a maximum for the best fo-
+cused image. Defocus algorithms be classied into two
+categories: those based on the statistical variance pixel
+values and those based on spatial-frequency content of
+the image. In this paper, we propose new algorithms
+based on the computation of the variance of the im-
+age gradient or image Laplacian that provides sharper
+focus measures than the pure variance-based or pure
+spatial-based methods for a similar computational cost.
+2. Materials and dataset
+Dierent diatom samples from fresh water and hu-
+man tissue 2 were analyzed with a Zeiss Axiophot pho-
+tomicroscope illuminated with a 100W halogen light
+with 40X lenses. For image acquisition, we used a Scion
+frame grabber that includes the NIH image processing
+shareware connected to a CCD analog camera from
+Pulnix. Two PC image analysis systems (Pentium II
+&III) were used one for image acquisition and the other
+one for algorithm computation. Furthermore, for com-
+puter intensive calculations a SUN Enterprise 450 with
+four processors was used. Images have been digitized
+with 8 bit/pixel and 256x256 pixel image format. The
+microscope slide was moved with a X-Y-Z motorized
+stage from Prior Instruments, with a step size of 0.1
+m for the X-Y axis and 1 m for the Z-axis.
+Fig. 1 shows some images of strewn slides with many
+diatoms and other biological debris.
+2We thank Dr. M. Bayer from Royal Botanical Garden Ed-
+inburgh and Dr. B. Ludes from Inst. of Legal Medicine (Univ.
+Louis Pasteur) for providing us some sample slides of diatoms
+1
+Figure 1. Examples of diatoms with some biological
+detritus
+3. Methods
+We have evaluated seven focus measures and
+selected those that perform the best. The criteria used
+were: (i) Variance (it depends upon the probability
+distribution and not its spatial distribution); (ii)
+Entropy (a measure of the histogram uniformity. It
+fails with images with complicated texture); (iii)
+Tenengrad (based on Sobel gradient); (iv) Brenner
+(gradient);(v) Sobel+variance; (vi) Laplacian and (vii)
+Laplacian+variance. We describe here the variance
+method (i) and the two proposed methods (v) and (vii).
+3.1. Local variance
+Let us assume a stack of k images of size MxN
+taken by changing the microscope focus in steps of 1
+m. Fig. 2 shows some examples of the image stack
+above and below the best focused image located at the
+center of the panel. The local variance at point (m,n),
+m=1,...,M and n=1,...,N is given by:
+lvk(m; n) =
+1
+wxwy
+wx
+Xi
+=0
+wy
+Xj
+=0
+[fk(m+ i; n + j) 􀀀 fk(m; n)]2
+(1)
+where fk represents the mean value:
+fk(m; n) =
+1
+wxwy
+wx
+Xi =
+0
+wy
+Xi
+=0
+[fk(m + i; n + j)] (2)
+(3)
+Figure 2. Stack of 9 images at different focus
+planes
+and the nal focus measure, will be given by the global
+variance of the previous local variance image:
+fmV
+k =
+1
+MN
+M
+X
+m=0
+N
+X
+n=0
+[lvk(m; n) 􀀀 lvk(m; n)]2 (4)
+where fmV
+k gives the focus measure for the image k
+and lvk is the global variance value:
+lvk =
+1
+MN
+M
+X
+m=0
+N
+X
+n=0
+[lvk(m; n)] (5)
+3.2. Variance of gradient magnitude
+The use of image gradients (either the rst or second
+derivatives) are instrumental in order to determine a
+reliable focus measure. In particular the Tenengrad
+method is considered as a benchmark in this eld. The
+method is based on computing the gradient magnitude
+of a Sobel operator:
+gk(m; n) = qgx(m; n)2 + gy(m; n)2 (6)
+where gx(m; n) and gy(m; n) are the convolutions with
+the kernels:  􀀀1 0 1
+􀀀2 0 2
+􀀀1 0 1  1 2 1
+0 0 0
+􀀀1 􀀀2 􀀀1  respectively.
+For each image m in the stack, the Tenengrad method
+provides a focus measure given by:
+fmG
+k =Xm
+Xn
+[gk(m; n)]2 (7)
+The best focused image will be given by the maximum
+of fmG
+k .
+3.3. Variance of Laplacian magnitude
+This technique is similar to gradient magnitude
+but using a second derivative operator. We use the
+Laplacian with the convolution kernel:
+1
+6  0 􀀀1 0
+􀀀1 4 1
+0 􀀀1 0  The method is based on computing the
+absolute value of the Laplacian operator.
+4. Results
+Here we propose a variant of this method based
+on use the variance of the magnitude of the Sobel
+gradient. The rationale of this approach is to dene
+a more discriminative measure similar to a second
+derivative (Laplacian) but increasing the robustness
+to noise. Fig. 3a,b shows a comparison of focus
+measurements without and with noise respectively 3.
+a
+b
+Figure 3. Focus measures (4 methods)
+3For a subjective focus and image fusion assessment see:
+http://www.iv.optica.csic.es/projects/autof.html
+4.1. Window size selection
+Another criteria to take into account is the window
+size selection for variance and gradient calculation.
+Fig. 4a shows as a box plot that the variance method
+provide a better focus estimate for small windows, but
+with the tradeo of a higher computational cost than
+large windows. However, Fig. 4b shows that the Sobel
+variance provides better results for large windows that
+leads to a reduction in the computational complexity.
+Next, we analyze the shape of the focus measures.
+a
+b
+Figure 4. Window size evaluation. (a) Variance
+measure. (b) Variance of Sobel measure.
+Horizontal axis gives window size as
+percentage of the full image size. The zero
+level corresponds to best focus.
+4.2. Focus assessment
+ Sharpness. Sharpness is not the only criteria for
+selecting a good focus measure. In fact, as Subbarao
+et al [9] has pointed out any focus measure can be
+articially sharpened by simply squaring the focus
+measure. Kurtosis is a candidate for peakedness.
+However it suers of a high noise sensitivity. We
+dene an progresive sharpness measure based on the
+absolute sum of dierences of three equidistant focus
+levels from the maximum value:
+F1 = k1Xi
+6=j
+jdi 􀀀 dj j (8)
+where di and dj represent the level intersections in the
+central lobe of the focus measure (Fig. 3b) and k1
+is a normalized constant. Fig. 5 shows that both
+Sobel+variance and Tenengrad methods provide the
+sharper focus response (i.e. a smaller F1 value).
+Figure 5. Focus noisy measures peakedness
+results for four selected methods
+ Smoothness and noise sensitivity
+We dene a relative measure based on an accumulative
+sum of the absolute gradient value of the focus measure
+(Fig. 3) with respect to a tting Gaussian with ( = 1).
+F2 = Pk jAF0
+kj
+Pk jAFkjG
+(9)
+where AF0
+k represents the rst derivative of the focus
+measure. Next table shows that both Sobel+variance
+and Tenengrad methods provide the smaller values of
+F2 that correspond to a better noise tolerance.
+Sobel+var Tenengrad Laplacian Laplacian+var
+1.0411 1.0646 2.507 2.101
+4.3. Multifocus
+fusion techniques
+Since diatoms have a 3-D valve we are investigating
+fusion-based methods for combining dierent focal
+planes. We tested several fusion methods and asked
+to a group of diatom experts about the best result.
+Fig. 6 shows the fused image selected by the experts
+from a stack of 8 focus planes. We used a Laplacian
+pyramid-based method for its calculation [8]. The
+recombination process produces a contrast enhanced
+image and the ne diatom striae becomes more visible
+Figure 6. Fused example corresponding to a
+stack of 8 images
+References
+[1] W. Bocker, W. Rolf, W. Muller, and C. Streer. Inves-
+tigations about autofocus-algorithms for 
+uorescent-
+microscopy. In SPIE Applications of Digital Image
+Processing XIX, volume 2847, pages 445{456, Denver,
+CO, 1996.
+[2] J. Cairns, K. Dickson, G. Lanza, S. Almeida, and
+D. del Balzo. Coherent optical spatial ltering of di-
+atoms in water pollution monitoring. Archiv. Mikro-
+biol., 83:141{146, 1972.
+[3] C. Field, M. Behrenfeld, J. Randerson, and
+P. Falkowski. Primary production of the biosphere:
+integrating terrestrial and oceanic components. Sci-
+ence, 281:237{240, 1998.
+[4] F. Groen, I. Young, and G. Ligthard. A comparison
+of dierent focus functions for use in autofocus algo-
+rithms. Cytometry, 6:81{91, 1985.
+[5] E. Krotkov. Focusing. Int. J. Comp. Vision, 1:223{
+237, 1987.
+[6] S. K. Nayar and Y. Nakagawa. Shape from fo-
+cus. IEEE Trans. on Patt. Anal. and Machine Intell.,
+16(8):824{831, 1994.
+[7] J. Pech-Pacheco and J. Alvarez-Borrego. Optical-
+digital system applied to the identication of ve phy-
+toplancton species. Mar. Biol., 132:357{365, 1998.
+[8] O. Rockinger. Multiresolution-Verfahren zur fusion
+dynamischer bildfolgen. PhD thesis, Technischen Uni-
+versitat Berlin, 1999.
+[9] M. Subarao and A. Nikzad. Focusing techniques. Opt.
+Eng., 32(11):2824{2836, 1993.
+[10] T. Yeo, S. Ong, Jayasooriah, and R. Sinniah. Autofo-
+cusing for tissue microscopy. Image and Vision Comp.,
+11(10):629{639, 1993.
+View publication stats
